@@ -1,7 +1,5 @@
 # coding: utf-8
 
-import matplotlib.pyplot as plt
-
 import numpy
 
 import tensorflow as tf

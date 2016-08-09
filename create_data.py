@@ -28,7 +28,6 @@ for i in range(0, 2):
     writer.writerows([X])
     writer.writerows([Y])
 
+f.close()
 npdata = np.array(data)
 np.save('logistic.npy', npdata)
-
-f.close()

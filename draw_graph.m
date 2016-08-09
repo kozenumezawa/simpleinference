@@ -1,4 +1,4 @@
-data = csvread('inputdata.csv');
+data = csvread('./csv/inputdata.csv');
 
 datasize = size(data);
 N_DATA = datasize(1) / 2;   %   the number of X or Y

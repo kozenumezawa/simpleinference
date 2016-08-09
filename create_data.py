@@ -2,13 +2,13 @@ import numpy as np
 import random
 import csv
 
-f = open('inputdata.csv', 'w')
+f = open('./csv/inputdata_1000.csv', 'w')
 writer = csv.writer(f)
 # csvdata = [['X', 'Y', 'value']]
 # writer.writerows(csvdata)
 
 data = []
-for i in range(0, 2):
+for i in range(0, 1000):
     #   Create one pair of time series data by using Logistic Equation
     divergence_flag = True
     while(divergence_flag):
@@ -30,4 +30,4 @@ for i in range(0, 2):
 
 f.close()
 npdata = np.array(data)
-np.save('logistic.npy', npdata)
+np.save('./npy/inputdata_1000.npy', npdata)

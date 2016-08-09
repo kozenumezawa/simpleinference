@@ -8,7 +8,8 @@ writer = csv.writer(f)
 # writer.writerows(csvdata)
 
 data = []
-for i in range(0, 1000):
+DATA_NUM = 10000
+for i in range(0, DATA_NUM):
     #   Create one pair of time series data by using Logistic Equation
     divergence_flag = True
     while(divergence_flag):

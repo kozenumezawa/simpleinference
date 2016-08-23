@@ -1,4 +1,4 @@
-inputdata <- read.csv("./csv/result_w.csv", header=FALSE)
+inputdata <- read.csv("../csv/result_w.csv", header=FALSE)
 N_DATA <- length(inputdata[,1])      #the number of units
 TIMESTEP <- length(inputdata[1,])    # the length of X or Y 
 
@@ -24,7 +24,7 @@ max.value <- max(W)    # 最大値（小数の場合は切り上げて整数に�
 min.value <- min(W)    # 最小値（小数の場合は切り捨てて整数にする）
 colorRamp <- rgb(
   seq(1, 1, length=256),   # 赤成分
-  seq(1, 0, length=256),   # 緑成分
+  seq(1, 0.5, length=256),   # 緑成分
   seq(1, 1, length=256)    # 青成分
 )
 colorLevels <- seq(min.value, max.value, length = length(colorRamp))
@@ -51,3 +51,4 @@ image(1, colorLevels,
       col = colorRamp, xlab="", ylab="", xaxt="n")
 box()
 layout(1)
+

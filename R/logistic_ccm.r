@@ -1,7 +1,7 @@
 library(multispatialCCM)
 library(rEDM)
 
-inputdata <- read.csv("./csv/inputdata_1000.csv", header=FALSE)
+inputdata <- read.csv("../csv/inputdata_1000.csv", header=FALSE)
 N_DATA <- length(inputdata[,1]) / 2  # the number of X or Y
 TIMESTEP <- length(inputdata[1,])    # the length of X or Y 
 

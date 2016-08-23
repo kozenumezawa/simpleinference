@@ -19,23 +19,6 @@ def main():
 
     data = numpy.zeros((inputdata.shape[1], inputdata.shape[2]),dtype=numpy.float32)
 
-    # for i in range(rawdata.shape[0]):
-    #     data[i * 6, :rawdata.shape[2]] = rawdata[i, 0]      #   S(salinity)
-    #     data[i * 6, rawdata.shape[2]:] = rawdata[i, 1]      #   T(water temperature)
-    #     data[i * 6 + 1, :rawdata.shape[2]] = rawdata[i, 0]  #   S(salinity)
-    #     data[i * 6 + 1, rawdata.shape[2]:] = rawdata[i, 2]  #   V(flow velocity)
-    #     data[i * 6 + 2, :rawdata.shape[2]] = rawdata[i, 1]  #   T(water temperature)
-    #     data[i * 6 + 2, rawdata.shape[2]:] = rawdata[i, 0]  #   S(salinity)
-    #     data[i * 6 + 3, :rawdata.shape[2]] = rawdata[i, 1]  #   T(water temperature)
-    #     data[i * 6 + 3, rawdata.shape[2]:] = rawdata[i, 2]  #   V(flow velocity)
-    #     data[i * 6 + 4, :rawdata.shape[2]] = rawdata[i, 2]  #   V(flow velocity)
-    #     data[i * 6 + 4, rawdata.shape[2]:] = rawdata[i, 0]  #   S(salinity)
-    #     data[i * 6 + 5, :rawdata.shape[2]] = rawdata[i, 2]  #   V(flow velocity)
-    #     data[i * 6 + 5, rawdata.shape[2]:] = rawdata[i, 1]  #   T(water temperature)
-    # print(data.shape)
-    #
-    #
-
     DATA_PAIR = inputdata.shape[1]
     TIME_STEP_2 = inputdata.shape[2]
 
@@ -78,16 +61,22 @@ def main():
             train_accuracy = loss.eval(session=sess, feed_dict={x: inputdata[step], keep_prob: 1.0})
             print("step %d:%g" % (step, train_accuracy))
 
-    result = sess.run(W2)
-    print(result.shape)
-    numpy.save('./npy/result.npy', result)
+    # Write input and output data to compare thme in order to check accuracy
+    one_input = inputdata[step]
+    one_output = sess.run(y,feed_dict={x: inputdata[step], keep_prob: 1.0})     #   get output y
+    f = open('./csv/result_to_compare.csv', 'w')
+    writer = csv.writer(f)
+    writer.writerows(one_input)
+    writer.writerows(one_output)
 
+    # Write weights W
+    result = sess.run(W2)
+    numpy.save('./npy/result.npy', result)
     f = open('./csv/result_W.csv', 'w')
     writer = csv.writer(f)
     for step in range(MIDDLE_UNIT):
         result_w = result[step].tolist()
         writer.writerows([result_w])
-
 
 if __name__ == '__main__':
     main()

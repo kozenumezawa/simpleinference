@@ -50,7 +50,7 @@ def main():
     summary_writer = tf.train.SummaryWriter('summary/l2_loss', graph_def=sess.graph_def)
 
     # DATA_NUM = inputdata.shape[0]
-    DATA_NUM = 4000
+    DATA_NUM = 3000
     for step in range(DATA_NUM):
         sess.run(train_step,
                  feed_dict={x: inputdata[step], keep_prob: (1 - DROP_OUT_RATE)})

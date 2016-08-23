@@ -9,11 +9,11 @@ TIMESTEP <- length(data[1,])    # the length of X or Y
 
 t <- 1:TIMESTEP
 
-plot(t, input_x, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value")
+plot(t, input_x, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(t, output_x, type = 'l', col = 'blue', ylim=c(0,1), xlab = '', ylab = '') 
+plot(t, output_x, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
 
-plot(t, input_y, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value")
+plot(t, input_y, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(t, output_y, type = 'l', col = 'blue', ylim=c(0,1) , xlab = '', ylab = '') 
+plot(t, output_y, type = 'l', ylim=c(0,1) , xlab = '', ylab = '', col = 'blue') 
 

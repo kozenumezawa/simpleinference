@@ -49,7 +49,7 @@ sess.run(init)
 summary_writer = tf.train.SummaryWriter('summary/l2_loss', graph_def=sess.graph_def)
 
 # DATA_NUM = inputdata.shape[0]
-DATA_NUM = 10000
+DATA_NUM = 3000
 for step in range(DATA_NUM):
     sess.run(train_step,
              feed_dict={x: inputdata[step], keep_prob: (1 - DROP_OUT_RATE)})
@@ -70,6 +70,7 @@ writer.writerows(one_output)
 
 # Write weights W
 result = sess.run(W2)
+numpy.save('../npy/result_W_switch.npy', result)
 f = open('../csv/result_W_switch.csv', 'w')
 writer = csv.writer(f)
 for step in range(MIDDLE_UNIT):

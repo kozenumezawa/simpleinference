@@ -27,7 +27,7 @@ MIDDLE_UNIT = 50
 W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
 b1 = bias_variable([MIDDLE_UNIT], 'b1')
 
-DROP_OUT_RATE = 0.5
+DROP_OUT_RATE = 0
 
 h = tf.nn.softsign(tf.matmul(x, W) + b1)
 keep_prob = tf.placeholder("float", name='keep_prob')
@@ -48,8 +48,8 @@ sess = tf.Session()
 sess.run(init)
 summary_writer = tf.train.SummaryWriter('summary/l2_loss', graph_def=sess.graph_def)
 
-# DATA_NUM = inputdata.shape[0]
-DATA_NUM = 3000
+DATA_NUM = 2000
+# trainning loop
 for step in range(DATA_NUM):
     sess.run(train_step,
              feed_dict={x: inputdata[step], keep_prob: (1 - DROP_OUT_RATE)})
@@ -60,13 +60,14 @@ for step in range(DATA_NUM):
         train_accuracy = loss.eval(session=sess, feed_dict={x: inputdata[step], keep_prob: 1.0})
         print("step %d:%g" % (step, train_accuracy))
 
-# Write input and output data to compare thme in order to check accuracy
-one_input = inputdata[step]
-one_output = sess.run(y,feed_dict={x: inputdata[step], keep_prob: 1.0})     #   get output y
+# Write input and output data to compare them in order to check accuracy
 f = open('../csv/result_to_compare_switch.csv', 'w')
 writer = csv.writer(f)
-writer.writerows(one_input)
-writer.writerows(one_output)
+for step in range(DATA_NUM):
+    one_input = inputdata[step]
+    one_output = sess.run(y,feed_dict={x: one_input, keep_prob: 1.0})     #   get output y
+    writer.writerows(one_input)
+    writer.writerows(one_output)
 
 # Write weights W
 result = sess.run(W2)

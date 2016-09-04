@@ -1,9 +1,11 @@
 data <- read.csv("../csv/result_to_compare_switch.csv", header=FALSE)
 
-input_x <- data[1,]
-input_y <- data[2,]
-output_x <- data[3,]
-output_y <- data[4,]
+data_index <- 1  # the numbr of data which we want to
+
+input_x <- data[data_index * 4 + 1,]
+input_y <- data[data_index * 4 + 2,]
+output_x <- data[data_index * 4 + 3,]
+output_y <- data[data_index * 4  + 4,]
 
 TIMESTEP <- length(data[1,])    # the length of X or Y 
 

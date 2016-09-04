@@ -1,3 +1,5 @@
 npy
 csv
 summary
+*.Rhistory
+*.Rdata

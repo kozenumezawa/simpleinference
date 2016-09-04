@@ -16,7 +16,7 @@ def main():
     obj = {
         'data': [{'X': list(item[0]), 'Y': list(item[1])} for item in data],
     }
-    json.dump(obj, open('./logistic.json', 'w'), sort_keys=True, indent=2)
+    json.dump(obj, open('../logistic.json', 'w'), sort_keys=True, indent=2)
 
 if __name__ == '__main__':
     main()

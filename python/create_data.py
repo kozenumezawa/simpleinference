@@ -2,7 +2,7 @@ import numpy as np
 import random
 import csv
 
-f = open('./csv/inputdata_1000.csv', 'w')
+f = open('../csv/inputdata_1000.csv', 'w')
 writer = csv.writer(f)
 # csvdata = [['X', 'Y', 'value']]
 # writer.writerows(csvdata)
@@ -31,4 +31,4 @@ for i in range(0, DATA_NUM):
 
 f.close()
 npdata = np.array(data)
-np.save('./npy/inputdata_1000.npy', npdata)
+np.save('../npy/inputdata_1000.npy', npdata)

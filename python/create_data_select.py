@@ -9,7 +9,7 @@ TIMESTEP = 25
 divergence_flag = True
 while(divergence_flag):
     print('start')
-    f = open('./csv/inputdata_b_low.csv', 'w')
+    f = open('../csv/inputdata_b_low.csv', 'w')
     writer = csv.writer(f)
     divergence_flag = False
     b = 0
@@ -28,7 +28,7 @@ while(divergence_flag):
     writer.writerows([Y])
     f.close()
 
-    f = open('./csv/inputdata_b_high.csv', 'w')
+    f = open('../csv/inputdata_b_high.csv', 'w')
     writer = csv.writer(f)
     b = 0.95
     X = []

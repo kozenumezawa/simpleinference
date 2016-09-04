@@ -15,7 +15,7 @@ def bias_variable(shape, variable_name):
 
 
 def main():
-    inputdata = numpy.load('./npy/inputdata_1000.npy')
+    inputdata = numpy.load('../npy/inputdata_1000.npy')
 
     data = numpy.zeros((inputdata.shape[1], inputdata.shape[2]),dtype=numpy.float32)
 
@@ -64,15 +64,15 @@ def main():
     # Write input and output data to compare thme in order to check accuracy
     one_input = inputdata[step]
     one_output = sess.run(y,feed_dict={x: inputdata[step], keep_prob: 1.0})     #   get output y
-    f = open('./csv/result_to_compare.csv', 'w')
+    f = open('../csv/result_to_compare.csv', 'w')
     writer = csv.writer(f)
     writer.writerows(one_input)
     writer.writerows(one_output)
 
     # Write weights W
     result = sess.run(W2)
-    numpy.save('./npy/result.npy', result)
-    f = open('./csv/result_W.csv', 'w')
+    numpy.save('../npy/result.npy', result)
+    f = open('../csv/result_W.csv', 'w')
     writer = csv.writer(f)
     for step in range(MIDDLE_UNIT):
         result_w = result[step].tolist()

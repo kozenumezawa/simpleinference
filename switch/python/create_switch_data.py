@@ -2,7 +2,7 @@ import numpy as np
 import random
 import csv
 
-f = open('../csv/input_switch_data_level1.csv', 'w')
+f = open('../csv/input_switch_data.csv', 'w')
 writer = csv.writer(f)
 
 data = []
@@ -43,4 +43,4 @@ for i in range(0, DATA_NUM):
 
 f.close()
 npdata = np.array(data)
-np.save('../npy/input_switch_data_level1.npy', npdata)
+np.save('../npy/input_switch_data.npy', npdata)

@@ -14,7 +14,7 @@ def bias_variable(shape, variable_name):
     return tf.Variable(initial, name=variable_name)
 
 
-inputdata = numpy.load('../npy/input_switch_data_level1.npy')
+inputdata = numpy.load('../npy/input_switch_data.npy')
 
 data = numpy.zeros((inputdata.shape[1], inputdata.shape[2]),dtype=numpy.float32)
 
@@ -27,7 +27,7 @@ MIDDLE_UNIT = 50
 W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
 b1 = bias_variable([MIDDLE_UNIT], 'b1')
 
-DROP_OUT_RATE = 0
+DROP_OUT_RATE = 0.3
 
 h = tf.nn.softsign(tf.matmul(x, W) + b1)
 keep_prob = tf.placeholder("float", name='keep_prob')

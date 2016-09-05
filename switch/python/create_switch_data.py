@@ -37,9 +37,8 @@ for i in range(0, DATA_NUM):
 
         X.append(x)
         Y.append(y)
-    writer.writerows([X])
-    writer.writerows([Y])
-    data.append([X, Y])
+    writer.writerows([X+Y])
+    data.append([X + Y])
 
 f.close()
 npdata = np.array(data)

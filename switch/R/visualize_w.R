@@ -1,6 +1,6 @@
 inputdata <- read.csv("../csv/result_W_switch.csv", header=FALSE)
 N_DATA <- length(inputdata[,1])      #the number of units
-TIMESTEP <- length(inputdata[1,])    # the length of X or Y 
+TIMESTEP <- length(inputdata[1,])    # the length of X or Y
 
 t <- 1:TIMESTEP
 
@@ -51,4 +51,3 @@ image(1, colorLevels,
       col = colorRamp, xlab="", ylab="", xaxt="n")
 box()
 layout(1)
-

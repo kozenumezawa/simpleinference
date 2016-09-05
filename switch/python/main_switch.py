@@ -16,18 +16,16 @@ def bias_variable(shape, variable_name):
 
 inputdata = numpy.load('../npy/input_switch_data.npy')
 
-data = numpy.zeros((inputdata.shape[1], inputdata.shape[2]),dtype=numpy.float32)
-
 DATA_PAIR = inputdata.shape[1]
 TIME_STEP_2 = inputdata.shape[2]
 
 x = tf.placeholder(tf.float32, [DATA_PAIR, TIME_STEP_2], name='x')
 
-MIDDLE_UNIT = 50
+MIDDLE_UNIT = 25
 W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
 b1 = bias_variable([MIDDLE_UNIT], 'b1')
 
-DROP_OUT_RATE = 0.3
+DROP_OUT_RATE = 0.5
 
 h = tf.nn.softsign(tf.matmul(x, W) + b1)
 keep_prob = tf.placeholder("float", name='keep_prob')
@@ -48,7 +46,7 @@ sess = tf.Session()
 sess.run(init)
 summary_writer = tf.train.SummaryWriter('summary/l2_loss', graph_def=sess.graph_def)
 
-DATA_NUM = 2000
+DATA_NUM = 3000
 # trainning loop
 for step in range(DATA_NUM):
     sess.run(train_step,

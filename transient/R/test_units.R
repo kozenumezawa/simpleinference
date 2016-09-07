@@ -20,7 +20,7 @@ for (i in 1:TIMESTEP) {
 }
 
 # comparison
-data_index <- 5
+data_index <- 1
 unit_outputs_1 <- t_W %*% t_inputdata[,data_index] + t_b[1,]
 unit_outputs_2 <- t_W %*% testdata + t_b[1,]
 
@@ -29,6 +29,15 @@ plot(units, unit_outputs_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = 
 par(new = TRUE)   #  Overwrite
 plot(units, unit_outputs_2, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
 # plot(units, t_b[1,], type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+
+# loop visualization 
+b <- 0
+for (i in 1:10) {
+  data_index <- i
+  unit_outputs_test <- t_W %*% t_inputdata[,data_index] + t_b[1,]
+  plot(units, unit_outputs_test, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+  par(new = TRUE)   #  Overwrite
+}
 
 # visualize each input
 t <- 1:TIMESTEP
@@ -42,3 +51,4 @@ b2 <- read.csv("../csv/result_b2_transient.csv", header=FALSE)
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
 plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'green') 
+

@@ -5,18 +5,28 @@ DATA_NUM <- length(inputdata[,1])    # the number of time series data
 
 W <- read.csv("../csv/result_W_transient.csv", header=FALSE)
 b <- read.csv("../csv/result_b_transient.csv", header=FALSE)
-
 UNITS_NUM <- length(W[1,])
+
 # transpose all matrix because translate from (xW+b) to (Wx+b)
 t_inputdata <- t(inputdata)
 t_W <- t(W)
 t_b <- t(b)
 
-units <- 1:UNITS_NUM
+# create testdata which do not have causal relation
+testdata <- array(data = 0, dim = c(TIMESTEP))
+for (i in 1:TIMESTEP) {
+  testdata[i] <- 0
+  i <- i + 1
+}
 
-data_index <- 3
 # comparison
-unit_outputs <- t_W %*% t_inputdata[,data_index] + t_b[1,]
-plot(units, unit_outputs, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+data_index <- 5
+unit_outputs_1 <- t_W %*% t_inputdata[,data_index] + t_b[1,]
+unit_outputs_2 <- t_W %*% testdata + t_b[1,]
+
+units <- 1:UNITS_NUM
+plot(units, unit_outputs_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(t, output, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+plot(units, unit_outputs_2, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+# plot(units, t_b[1,], type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+

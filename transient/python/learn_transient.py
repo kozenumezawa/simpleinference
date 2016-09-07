@@ -92,11 +92,20 @@ for step in range(TIME_STEP_2):
     result_w = result[step].tolist()
     writer.writerows([result_w])
 
-# Write bias b
+# Write bias b1
 result = sess.run(b1)
-numpy.save('../npy/result_b_transient.npy', result)
-f = open('../csv/result_b_transient.csv', 'w')
+numpy.save('../npy/result_b1_transient.npy', result)
+f = open('../csv/result_b1_transient.csv', 'w')
 writer = csv.writer(f)
 for step in range(MIDDLE_UNIT):
+    result_b = result[step].tolist()
+    writer.writerows([[result_b]])
+
+# Write bias b2
+result = sess.run(b2)
+numpy.save('../npy/result_b2_transient.npy', result)
+f = open('../csv/result_b2_transient.csv', 'w')
+writer = csv.writer(f)
+for step in range(TIME_STEP_2):
     result_b = result[step].tolist()
     writer.writerows([[result_b]])

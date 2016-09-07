@@ -4,10 +4,12 @@ import csv
 from math import exp
 
 f = open('../csv/input_transient_data.csv', 'w')
+f2 = open('../csv/input_transient_data_connect.csv', 'w')
 writer = csv.writer(f)
+writer2 = csv.writer(f2)
 
 data = []
-DATA_NUM = 10000
+DATA_NUM = 5000
 TIMESTEP = 100
 
 R = 1
@@ -40,6 +42,7 @@ for i in range(0, DATA_NUM):
         I.append(i)
     writer.writerows([V])
     writer.writerows([I])
+    writer2.writerows([V + I])
     data.append([V, I])
 
 f.close()

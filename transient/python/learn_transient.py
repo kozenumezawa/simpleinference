@@ -16,7 +16,7 @@ def bias_variable(shape, variable_name):
 
 rawdata = numpy.load('../npy/input_transient_data.npy')
 
-# (10000,2,100)　→ (10000,200) の形式に変換(to learn causality)
+# (10000,2,100)→(10000,200)  (to learn causality)
 inputdata = numpy.zeros((rawdata.shape[0], rawdata.shape[2] * rawdata.shape[1]), dtype=numpy.float32)
 for i in range(rawdata.shape[0]):
     inputdata[i,:rawdata.shape[2]] = rawdata[i, 0]       #   Voltage V
@@ -28,7 +28,7 @@ TIME_STEP_2 = inputdata.shape[1]
 
 x = tf.placeholder(tf.float32, [BATCH_SIZE, TIME_STEP_2], name='x')
 
-MIDDLE_UNIT = 25
+MIDDLE_UNIT = 50
 W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
 b1 = bias_variable([MIDDLE_UNIT], 'b1')
 
@@ -53,7 +53,7 @@ sess = tf.Session()
 sess.run(init)
 summary_writer = tf.train.SummaryWriter('summary/l2_loss', graph_def=sess.graph_def)
 
-DATA_NUM = 2000
+DATA_NUM = 3000
 # trainning loop
 for step in range(DATA_NUM):
     sess.run(train_step,
@@ -74,11 +74,29 @@ for step in range(DATA_NUM):
     writer.writerows(one_input)
     writer.writerows(one_output)
 
+# Write input and output data to compare them in order to check accuracy
+f = open('../csv/result_to_compare_transient.csv', 'w')
+writer = csv.writer(f)
+for step in range(DATA_NUM):
+    one_input = [inputdata[step]]
+    one_output = sess.run(y,feed_dict={x: one_input, keep_prob: 1.0})     #   get output y
+    writer.writerows(one_input)
+    writer.writerows(one_output)
+
 # Write weights W
-result = sess.run(W2)
+result = sess.run(W)
 numpy.save('../npy/result_W_transient.npy', result)
 f = open('../csv/result_W_transient.csv', 'w')
 writer = csv.writer(f)
-for step in range(MIDDLE_UNIT):
+for step in range(TIME_STEP_2):
     result_w = result[step].tolist()
     writer.writerows([result_w])
+
+# Write bias b
+result = sess.run(b1)
+numpy.save('../npy/result_b_transient.npy', result)
+f = open('../csv/result_b_transient.csv', 'w')
+writer = csv.writer(f)
+for step in range(MIDDLE_UNIT):
+    result_b = result[step].tolist()
+    writer.writerows([[result_b]])

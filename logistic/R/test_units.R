@@ -12,17 +12,12 @@ t_inputdata <- t(inputdata)
 t_W <- t(W)
 t_b <- t(b)
 
-# create testdata which do not have causal relation
-testdata <- array(data = 0, dim = c(TIMESTEP))
-for (i in 1:TIMESTEP) {
-  testdata[i] <- runif(1)
-  i <- i + 1
-}
-
 # comparison
-data_index <- 20
-unit_outputs_1 <- t_W %*% t_inputdata[,data_index] + t_b[1,]
-unit_outputs_2 <- t_W %*% testdata + t_b[1,]
+input_1 <- read.csv("../csv/inputdata_b_low.csv", header=FALSE)
+input_2 <- read.csv("../csv/inputdata_b_high.csv", header=FALSE)
+
+unit_outputs_1 <- t_W %*% t(input_1) + t_b[1,]
+unit_outputs_2 <- t_W %*% t(input_2) + t_b[1,]
 
 units <- 1:UNITS_NUM
 plot(units, unit_outputs_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
@@ -32,9 +27,9 @@ plot(units, unit_outputs_2, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col =
 
 # visualize each input
 t <- 1:TIMESTEP
-plot(t, t_inputdata[,data_index], type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+plot(t, input_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(t, testdata, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+plot(t, input_2, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'blue')
 
 # visualize autoencoder output
 activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))

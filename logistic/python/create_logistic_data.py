@@ -10,7 +10,7 @@ writer2 = csv.writer(f2)
 
 data = []
 DATA_NUM = 5000
-TIMESTEP = 50
+TIMESTEP = 25
 for i in range(0, DATA_NUM):
     #   Create one pair of time series data by using Logistic Equation
     divergence_flag = True

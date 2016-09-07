@@ -28,7 +28,7 @@ TIME_STEP_2 = inputdata.shape[1]
 
 x = tf.placeholder(tf.float32, [BATCH_SIZE, TIME_STEP_2], name='x')
 
-MIDDLE_UNIT = 30
+MIDDLE_UNIT = 25
 W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
 b1 = bias_variable([MIDDLE_UNIT], 'b1')
 

@@ -12,29 +12,56 @@ t_inputdata <- t(inputdata)
 t_W <- t(W)
 t_b <- t(b)
 
-# comparison
-input_1 <- read.csv("../csv/inputdata_b_low.csv", header=FALSE)
-input_2 <- read.csv("../csv/inputdata_b_high.csv", header=FALSE)
-
+# comparison the output, visualize each output of neurons
+input_1 <- read.csv("../csv/inputdata_b_0_1.csv", header=FALSE)
+input_5 <- read.csv("../csv/inputdata_b_0_5.csv", header=FALSE)
+input_8 <- read.csv("../csv/inputdata_b_0_8.csv", header=FALSE)
 unit_outputs_1 <- t_W %*% t(input_1) + t_b[1,]
-unit_outputs_2 <- t_W %*% t(input_2) + t_b[1,]
+unit_outputs_5 <- t_W %*% t(input_5) + t_b[1,]
+unit_outputs_8 <- t_W %*% t(input_8) + t_b[1,]
 
 units <- 1:UNITS_NUM
-plot(units, unit_outputs_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+plot(units, unit_outputs_1, type = "l", ylim=c(0,1), xlab = "unit", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(units, unit_outputs_2, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
-# plot(units, t_b[1,], type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+plot(units, unit_outputs_5, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
+par(new = TRUE)   #  Overwrite
+plot(units, unit_outputs_8, type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'green') 
+
 
 # visualize each input
 t <- 1:TIMESTEP
 plot(t, input_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
 par(new = TRUE)   #  Overwrite
-plot(t, input_2, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'blue')
+plot(t, input_5, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'blue')
+par(new = TRUE)   #  Overwrite
+plot(t, input_8, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'green')
 
 # visualize autoencoder output
 activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))
 b2 <- read.csv("../csv/result_b2_logistic.csv", header=FALSE)
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
-plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'green') 
+plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 
 
+# visualize each input and output
+b2 <- read.csv("../csv/result_b2_logistic.csv", header=FALSE)
+# b = 0.1
+plot(t, input_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))
+y <- data.matrix(W) %*% activate_outputs + b2
+par(new = TRUE)   #  Overwrite
+plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 
+
+# b = 0.5
+plot(t, input_5, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+activate_outputs <- unit_outputs_5 / (1 + abs(unit_outputs_5))
+y <- data.matrix(W) %*% activate_outputs + b2
+par(new = TRUE)   #  Overwrite
+plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 
+
+# b = 0.8
+plot(t, input_8, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
+activate_outputs <- unit_outputs_8 / (1 + abs(unit_outputs_8))
+y <- data.matrix(W) %*% activate_outputs + b2
+par(new = TRUE)   #  Overwrite
+plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 

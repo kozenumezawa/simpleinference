@@ -28,19 +28,30 @@ TIME_STEP_2 = inputdata.shape[1]
 
 x = tf.placeholder(tf.float32, [BATCH_SIZE, TIME_STEP_2], name='x')
 
-MIDDLE_UNIT = 40
-W = weight_variable((TIME_STEP_2, MIDDLE_UNIT), 'W')
-b1 = bias_variable([MIDDLE_UNIT], 'b1')
-
+# input to hidden 1
+MIDDLE_UNIT1 = 40
+W1 = weight_variable((TIME_STEP_2, MIDDLE_UNIT1), 'W1')
+b1 = bias_variable([MIDDLE_UNIT1], 'b1')
 DROP_OUT_RATE = 0.5
+h1 = tf.nn.softsign(tf.matmul(x, W1) + b1)
+keep_prob1 = tf.placeholder("float", name='keep_prob1')
+h_drop1 = tf.nn.dropout(h1, keep_prob1)
 
-h = tf.nn.softsign(tf.matmul(x, W) + b1)
-keep_prob = tf.placeholder("float", name='keep_prob')
-h_drop = tf.nn.dropout(h, keep_prob)
+# hidden1 to hidden2
+MIDDLE_UNIT2 = 30
+W2 = weight_variable((MIDDLE_UNIT1, MIDDLE_UNIT2), 'W2')
+b2 = bias_variable([MIDDLE_UNIT2], 'b2')
+h2 = tf.nn.softsign(tf.matmul(h_drop1, W2) + b2)
 
-W2 = tf.transpose(W)  # 転置
-b2 = bias_variable([TIME_STEP_2], 'b2')
-y = tf.nn.relu(tf.matmul(h_drop, W2) + b2)
+# hidden2 to hidden3
+W3 = tf.transpose(W2)  # 転置
+b3 = bias_variable([MIDDLE_UNIT1], 'b3')
+h3 = tf.nn.softsign(tf.matmul(h2, W3) + b3)
+
+# hidden3 to output
+W4 = tf.transpose(W1)  # 転置
+b4 = bias_variable([TIME_STEP_2], 'b2')
+y = tf.nn.relu(tf.matmul(h3, W4) + b4)
 
 loss = tf.nn.l2_loss(y - x) / BATCH_SIZE
 
@@ -57,47 +68,19 @@ DATA_NUM = 3000
 # trainning loop
 for step in range(DATA_NUM):
     sess.run(train_step,
-             feed_dict={x: [inputdata[step]], keep_prob: (1 - DROP_OUT_RATE)})
+             feed_dict={x: [inputdata[step]], keep_prob1: (1 - DROP_OUT_RATE)})
     summary_op = tf.merge_all_summaries()
-    summary_str = sess.run(summary_op, feed_dict={x: [inputdata[step]], keep_prob: 1.0})
+    summary_str = sess.run(summary_op, feed_dict={x: [inputdata[step]], keep_prob1: 1.0})
     summary_writer.add_summary(summary_str, step)
     if step % 100 == 0:
-        train_accuracy = loss.eval(session=sess, feed_dict={x: [inputdata[step]], keep_prob: 1.0})
+        train_accuracy = loss.eval(session=sess, feed_dict={x: [inputdata[step]], keep_prob1: 1.0})
         print("step %d:%g" % (step, train_accuracy))
 
-
 # Write input and output data to compare them in order to check accuracy
-f = open('../csv/result_to_compare_logistic.csv', 'w')
+f = open('../csv/result_to_compare_logistic_deep.csv', 'w')
 writer = csv.writer(f)
 for step in range(DATA_NUM):
     one_input = [inputdata[step]]
-    one_output = sess.run(y,feed_dict={x: one_input, keep_prob: 1.0})     #   get output y
+    one_output = sess.run(y,feed_dict={x: one_input, keep_prob1: 1.0})     #   get output y
     writer.writerows(one_input)
     writer.writerows(one_output)
-
-# Write weights W
-result = sess.run(W)
-numpy.save('../npy/result_W_logistic.npy', result)
-f = open('../csv/result_W_logistic.csv', 'w')
-writer = csv.writer(f)
-for step in range(TIME_STEP_2):
-    result_w = result[step].tolist()
-    writer.writerows([result_w])
-
-# Write bias b1
-result = sess.run(b1)
-numpy.save('../npy/result_b1_logistic.npy', result)
-f = open('../csv/result_b1_logistic.csv', 'w')
-writer = csv.writer(f)
-for step in range(MIDDLE_UNIT):
-    result_b = result[step].tolist()
-    writer.writerows([[result_b]])
-
-# Write bias b2
-result = sess.run(b2)
-numpy.save('../npy/result_b2_logistic.npy', result)
-f = open('../csv/result_b2_logistic.csv', 'w')
-writer = csv.writer(f)
-for step in range(TIME_STEP_2):
-    result_b = result[step].tolist()
-    writer.writerows([[result_b]])

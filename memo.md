@@ -17,7 +17,7 @@ R
 - visualize_w.R - main.pyで生成された重みWをヒートマップで表すことを目指したプログラム。
 
 ## TensorBoardの使い方
-tensorboard --logdir=/ディレクトリの絶対パス/mnist1_data
+tensorboard --logdir=/Users/koyamada-lab/program/simpleinference/logistic/python/summary
 
 ## 2016/09/04
 以前までは、ロジスティック方程式に対してオートエンコーダを使用していた。

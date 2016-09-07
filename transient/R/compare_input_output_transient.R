@@ -1,6 +1,6 @@
 data <- read.csv("../csv/result_to_compare_transient.csv", header=FALSE)
 
-data_index <- 5  # the numbr of data which we want to
+data_index <- 10  # the numbr of data which we want to
 
 input <- data[(data_index - 1) * 2 + 1,]
 output <- data[(data_index - 1) * 2 + 2,]

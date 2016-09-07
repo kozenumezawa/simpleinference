@@ -36,13 +36,6 @@ plot(t, input_5, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", co
 par(new = TRUE)   #  Overwrite
 plot(t, input_8, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'green')
 
-# visualize autoencoder output
-activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))
-b2 <- read.csv("../csv/result_b2_logistic.csv", header=FALSE)
-y <- data.matrix(W) %*% activate_outputs + b2
-par(new = TRUE)   #  Overwrite
-plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 
-
 # visualize each input and output
 b2 <- read.csv("../csv/result_b2_logistic.csv", header=FALSE)
 # b = 0.1
@@ -65,3 +58,4 @@ activate_outputs <- unit_outputs_8 / (1 + abs(unit_outputs_8))
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
 plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'black') 
+

@@ -21,7 +21,6 @@ inputdata = numpy.zeros((rawdata.shape[0], rawdata.shape[2] * rawdata.shape[1]),
 for i in range(rawdata.shape[0]):
     inputdata[i,:rawdata.shape[2]] = rawdata[i, 0]       #   X
     inputdata[i, rawdata.shape[2]:] = rawdata[i, 1]      #   Y
-print(inputdata.shape)
 
 BATCH_SIZE = 1
 TIME_STEP_2 = inputdata.shape[1]

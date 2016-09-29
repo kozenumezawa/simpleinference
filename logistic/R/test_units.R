@@ -40,21 +40,24 @@ plot(t, input_8, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", co
 b2 <- read.csv("../csv/result_b2_logistic.csv", header=FALSE)
 # b = 0.1
 plot(t, input_1, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
-activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))
+#activate_outputs <- unit_outputs_1 / (1 + abs(unit_outputs_1))
+activate_outputs <- unit_outputs_1
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
 plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
 
 # b = 0.5
 plot(t, input_5, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
-activate_outputs <- unit_outputs_5 / (1 + abs(unit_outputs_5))
+#activate_outputs <- unit_outputs_5 / (1 + abs(unit_outputs_5))
+activate_outputs <- unit_outputs_5
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
 plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 
 
 # b = 0.8
 plot(t, input_8, type = "l", ylim=c(0,1), xlab = "Time step", ylab = "value", col = 'red')
-activate_outputs <- unit_outputs_8 / (1 + abs(unit_outputs_8))
+# activate_outputs <- unit_outputs_8 / (1 + abs(unit_outputs_8))
+activate_outputs <- unit_outputs_8
 y <- data.matrix(W) %*% activate_outputs + b2
 par(new = TRUE)   #  Overwrite
 plot(t, t(y), type = 'l', ylim=c(0,1), xlab = '', ylab = '', col = 'blue') 

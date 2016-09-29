@@ -33,7 +33,10 @@ b1 = bias_variable([MIDDLE_UNIT], 'b1')
 
 DROP_OUT_RATE = 0.5
 
-h = tf.nn.softsign(tf.matmul(x, W) + b1)
+# h = tf.nn.softsign(tf.matmul(x, W) + b1)
+h = tf.matmul(x, W) + b1
+# h = tf.nn.sigmoid(tf.matmul(x, W) + b1)
+# h = tf.nn.relu(tf.matmul(x, W) + b1)
 keep_prob = tf.placeholder("float", name='keep_prob')
 h_drop = tf.nn.dropout(h, keep_prob)
 
